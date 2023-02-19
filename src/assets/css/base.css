@@ -1,0 +1,17 @@
+:root {
+  --text-color: #000;
+  --primary-color: #cc1e1e;
+}
+a {
+  text-decoration: none !important;
+  color: var(--text-color);
+}
+html {
+  font-family: 'Averta', Arial, Helvetica, sans-serif;
+}
+
+.container-base {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
