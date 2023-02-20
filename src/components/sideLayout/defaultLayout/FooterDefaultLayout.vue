@@ -1,5 +1,6 @@
 <template>
   <div class="footer mt-5">
+    <SnowAnimation />
     <div class="container-base pt-4">
       <div class="row">
         <div class="col-md-3">
@@ -59,6 +60,8 @@
 
 <style lang="scss" scoped>
 .footer {
+  position: relative;
+  overflow: hidden;
   background-color: #000;
 
   ul {
@@ -94,3 +97,15 @@
   }
 }
 </style>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import SnowAnimation from '@/components/snow-animation/SnowAnimation.vue';
+
+export default defineComponent({
+  components: {
+    SnowAnimation,
+  },
+  setup() {},
+});
+</script>

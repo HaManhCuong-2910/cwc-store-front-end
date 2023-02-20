@@ -2,13 +2,15 @@
   <div class="products-contain mt-5">
     <div class="products-intro">
       <h2>SẢN PHẨM NỔI BẬT</h2>
+      <span></span>
     </div>
     <div class="products mt-4">
       <div class="row">
         <div
           class="col-2"
           v-for="item in data.listProducts"
-          :key="item"
+          :key="item._id"
+          ref="product"
         >
           <div class="products-contain-card">
             <div class="products-contain-card-img">
@@ -40,10 +42,29 @@
 <style lang="scss" scoped>
 .products-intro {
   h2 {
+    display: inline-block;
+    width: 15%;
     font-size: 21px;
   }
-}
 
+  span {
+    display: inline-block;
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(to right, #2980b9, #2c3e50);
+    animation: runAnimated linear 1s;
+  }
+}
+@keyframes runAnimated {
+  from {
+    opacity: 0;
+    width: 0%;
+  }
+  to {
+    opacity: 1;
+    width: 80%;
+  }
+}
 .products-contain-card {
   .products-contain-card-img {
     border-radius: 12px;
@@ -82,11 +103,18 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue';
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
 import { getProducts } from '@/api/products/index';
 import { AxiosResponse } from 'axios';
 import { TProduct } from '@/api/products/data';
 import ProductNormal from '@/components/home/Products.vue';
+import ScrollReveal from 'scrollreveal';
 
 interface IProducts {
   listProducts: TProduct[];
@@ -105,6 +133,8 @@ export default defineComponent({
       listProductNormal: [],
     });
 
+    const product = ref<any>();
+
     onMounted(async () => {
       const result = await getProducts();
       data.listProductNormal = result.data.data;
@@ -113,8 +143,28 @@ export default defineComponent({
       );
     });
 
+    watch(
+      () => product.value,
+      () => {
+        if (product.value[0]) {
+          product.value.forEach(
+            (element: any, index: number) => {
+              ScrollReveal().reveal(element, {
+                delay: 200 * index,
+                duration: 1000,
+                distance: '150px',
+                opacity: 0,
+                origin: 'bottom',
+              });
+            }
+          );
+        }
+      }
+    );
+
     return {
       data,
+      product,
     };
   },
 });

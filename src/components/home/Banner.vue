@@ -1,34 +1,43 @@
 <template>
   <div class="banner">
-    <swiper
-      :slides-per-view="1"
-      :autoplay="{
-        delay: 2000,
-        disableOnInteraction: false,
-      }"
-      :speed="800"
-      :modules="modules"
-      :loop="true"
-    >
-      <swiper-slide
-        v-for="item in data.listImage"
-        :key="item"
+    <div class="banner-swiper">
+      <SnowAnimation />
+      <swiper
+        :slides-per-view="1"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+        }"
+        :speed="800"
+        :modules="modules"
+        :loop="true"
       >
-        <img
-          :src="item"
-          alt="banner image"
-          class="banner-img rounded"
-        />
-      </swiper-slide>
-    </swiper>
+        <swiper-slide
+          v-for="item in data.listImage"
+          :key="item"
+        >
+          <img
+            :src="item"
+            alt="banner image"
+            class="banner-img rounded"
+          />
+        </swiper-slide>
+      </swiper>
+    </div>
+
     <BannerDetail />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.banner-img {
-  width: 100%;
-  height: 550px;
+.banner-swiper {
+  position: relative;
+  overflow: hidden;
+
+  .banner-img {
+    width: 100%;
+    height: 600px;
+  }
 }
 </style>
 
@@ -38,6 +47,7 @@ import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { getBannerHome } from '@/api/home/index';
 import BannerDetail from '@/components/home/BannerDetail.vue';
+import SnowAnimation from '@/components/snow-animation/SnowAnimation.vue';
 
 type TBanner = {
   listImage: string[];
@@ -48,6 +58,7 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
     BannerDetail,
+    SnowAnimation,
   },
   setup() {
     const data = reactive<TBanner>({

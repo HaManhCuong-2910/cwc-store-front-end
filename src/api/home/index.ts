@@ -3,8 +3,8 @@ import { instance } from '../axios';
 
 export const getBannerHome = async () => {
   return [
-    'https://i.pinimg.com/originals/fa/45/96/fa4596ad9a9d39901eeb455ed4f74e44.jpg',
-    'https://cdn.dribbble.com/users/6554824/screenshots/14735696/banner_4x.jpg',
-    'https://cdn.shopify.com/s/files/1/0607/6104/7285/files/The_Cross_Trainer__Banner-_Nike_Dunk_Low_GS_1024x1024.jpg?v=1649157081',
+    'https://jdsportsusablog.s3.amazonaws.com/wp-content/uploads/2023/01/Ja1-HeaderBanner-01.jpg',
+    'https://e0.pxfuel.com/wallpapers/536/1007/desktop-wallpaper-basketball-shoes-sf-shoes-shop-banner-design-nike-basketball-shoes.jpg',
+    'https://www.si.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_xy_center%2Cq_auto:good%2Cw_1200%2Cx_2357%2Cy_2273/MTk0ODgwMzM1NDQ2NTQ5NjY2/usatsi_19706694.jpg',
   ];
 };
