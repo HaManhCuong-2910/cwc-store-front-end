@@ -9,6 +9,7 @@
           class="col-2"
           v-for="item in props.listProduct"
           :key="item"
+          ref="product"
         >
           <div class="products-contain-card">
             <div class="products-contain-card-img">
@@ -87,22 +88,48 @@ import {
   reactive,
   PropType,
   watch,
+  ref,
 } from 'vue';
 import { TProduct } from '@/api/products/data';
+import { AxiosResponse } from 'axios';
+import ScrollReveal from 'scrollreveal';
 
 export default defineComponent({
   props: {
     listProduct: {
-      type: Object as PropType<TProduct[]>,
+      type: Object as PropType<
+        TProduct[] | AxiosResponse<TProduct[], any>
+      >,
       required: true,
     },
   },
   setup(props) {
     const data = reactive({});
+    const product = ref<any>();
+
+    watch(
+      () => product.value,
+      () => {
+        if (product.value[0]) {
+          product.value.forEach(
+            (element: any, index: number) => {
+              ScrollReveal().reveal(element, {
+                delay: 200 * index,
+                duration: 1000,
+                distance: '150px',
+                opacity: 0,
+                origin: 'bottom',
+              });
+            }
+          );
+        }
+      }
+    );
 
     return {
       data,
       props,
+      product,
     };
   },
 });

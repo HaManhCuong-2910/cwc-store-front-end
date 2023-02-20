@@ -3,7 +3,8 @@ import router from '@/router/index';
 import ElementPlus from 'element-plus';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BootstrapVue3 from 'bootstrap-vue-3';
-import VueSnip from 'vue-snip'
+import VueSnip from 'vue-snip';
+import ScrollReveal from 'scrollreveal';
 import '@/utils/LoadingRouter';
 
 import 'element-plus/dist/index.css';
@@ -28,6 +29,7 @@ export function registerGlobalComponent(app: any) {
     .use(VueSnip)
     .use(BootstrapVue3)
     .use(ElementPlus)
+    .use(ScrollReveal)
     .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app');
 }
