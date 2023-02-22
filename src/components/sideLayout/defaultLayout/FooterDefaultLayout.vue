@@ -1,6 +1,5 @@
 <template>
   <div class="footer mt-5">
-    <SnowAnimation />
     <div class="container-base pt-4">
       <div class="row">
         <div class="col-md-3">
@@ -100,12 +99,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import SnowAnimation from '@/components/snow-animation/SnowAnimation.vue';
 
 export default defineComponent({
-  components: {
-    SnowAnimation,
-  },
+  components: {},
   setup() {},
 });
 </script>

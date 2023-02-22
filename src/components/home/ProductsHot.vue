@@ -2,7 +2,7 @@
   <div class="products-contain mt-5">
     <div class="products-intro">
       <h2>SẢN PHẨM NỔI BẬT</h2>
-      <span></span>
+      <LineTitle />
     </div>
     <div class="products mt-4">
       <div class="row">
@@ -45,24 +45,6 @@
     display: inline-block;
     width: 15%;
     font-size: 21px;
-  }
-
-  span {
-    display: inline-block;
-    width: 80%;
-    height: 2px;
-    background: linear-gradient(to right, #2980b9, #2c3e50);
-    animation: runAnimated linear 1s;
-  }
-}
-@keyframes runAnimated {
-  from {
-    opacity: 0;
-    width: 0%;
-  }
-  to {
-    opacity: 1;
-    width: 80%;
   }
 }
 .products-contain-card {
@@ -115,6 +97,7 @@ import { AxiosResponse } from 'axios';
 import { TProduct } from '@/api/products/data';
 import ProductNormal from '@/components/home/Products.vue';
 import ScrollReveal from 'scrollreveal';
+import LineTitle from './helper/LineTitle.vue';
 
 interface IProducts {
   listProducts: TProduct[];
@@ -126,6 +109,7 @@ interface IProducts {
 export default defineComponent({
   components: {
     ProductNormal,
+    LineTitle,
   },
   setup() {
     const data = reactive<IProducts>({
@@ -151,6 +135,7 @@ export default defineComponent({
             (element: any, index: number) => {
               ScrollReveal().reveal(element, {
                 delay: 200 * index,
+                reset: true,
                 duration: 1000,
                 distance: '150px',
                 opacity: 0,

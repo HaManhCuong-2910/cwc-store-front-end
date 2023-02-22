@@ -2,6 +2,7 @@
   <div class="products-contain mt-5">
     <div class="products-intro">
       <h2>GIÀY BÓNG RỔ</h2>
+      <LineTitle />
     </div>
     <div class="products mt-4">
       <div class="row">
@@ -40,6 +41,8 @@
 <style lang="scss" scoped>
 .products-intro {
   h2 {
+    display: inline-block;
+    width: 15%;
     font-size: 21px;
   }
 }
@@ -93,6 +96,7 @@ import {
 import { TProduct } from '@/api/products/data';
 import { AxiosResponse } from 'axios';
 import ScrollReveal from 'scrollreveal';
+import LineTitle from './helper/LineTitle.vue';
 
 export default defineComponent({
   props: {
@@ -102,6 +106,9 @@ export default defineComponent({
       >,
       required: true,
     },
+  },
+  components: {
+    LineTitle,
   },
   setup(props) {
     const data = reactive({});
@@ -116,6 +123,7 @@ export default defineComponent({
               ScrollReveal().reveal(element, {
                 delay: 200 * index,
                 duration: 1000,
+                reset: true,
                 distance: '150px',
                 opacity: 0,
                 origin: 'bottom',
