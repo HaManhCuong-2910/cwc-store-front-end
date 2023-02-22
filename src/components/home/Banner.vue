@@ -1,7 +1,6 @@
 <template>
   <div class="banner">
     <div class="banner-swiper">
-      <SnowAnimation />
       <swiper
         :slides-per-view="1"
         :autoplay="{
@@ -47,7 +46,6 @@ import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { getBannerHome } from '@/api/home/index';
 import BannerDetail from '@/components/home/BannerDetail.vue';
-import SnowAnimation from '@/components/snow-animation/SnowAnimation.vue';
 
 type TBanner = {
   listImage: string[];
@@ -58,7 +56,6 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
     BannerDetail,
-    SnowAnimation,
   },
   setup() {
     const data = reactive<TBanner>({
