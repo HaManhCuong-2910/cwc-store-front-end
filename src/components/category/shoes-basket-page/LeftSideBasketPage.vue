@@ -19,7 +19,10 @@
             placeholder="nhập tên sản phẩm"
             @select="handleSelect"
           />
-          <el-button type="primary" class="btn-custom"
+          <el-button
+            type="primary"
+            class="btn-custom"
+            @click="handleSearch"
             >Tìm kiếm</el-button
           >
         </div>
@@ -111,7 +114,6 @@ export default defineComponent({
       const results = queryString
         ? products.value.filter(createFilter(queryString))
         : products.value;
-      // call callback function to return suggestions
       cb(results);
     };
     const createFilter = (queryString: string) => {
@@ -168,6 +170,10 @@ export default defineComponent({
       console.log('value', value);
     };
 
+    const handleSearch = () => {
+      console.log('state', state1.value);
+    };
+
     onMounted(() => {
       products.value = loadAll();
     });
@@ -176,6 +182,7 @@ export default defineComponent({
       state1,
       handleSelect,
       querySearch,
+      handleSearch,
       prices,
       size,
       handlePrices,

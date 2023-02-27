@@ -14,58 +14,69 @@
             <LoadingCard />
           </div>
         </div>
-
-        <div class="row" v-else>
-          <div
-            class="col-3"
-            v-for="item in props.products"
-            :key="item"
-          >
-            <el-card class="card-container redirect-link">
-              <div class="image">
-                <img :src="item.images[0]" />
-              </div>
-
-              <div class="card-detail-container">
-                <router-link
-                  :to="{
-                    name: 'DetailBasket',
-                    params: {
-                      slug: item.slug,
-                    },
-                  }"
-                  ><p class="title">
-                    {{ item.name }}
-                  </p></router-link
+        <div v-else>
+          <div v-if="props.products.length > 0">
+            <div class="row">
+              <div
+                class="col-3"
+                v-for="item in props.products"
+                :key="item"
+              >
+                <el-card
+                  class="card-container redirect-link"
                 >
+                  <div class="image">
+                    <img :src="item.images[0]" />
+                  </div>
 
-                <div class="card-detail-description">
-                  <span class="prices"
-                    >{{ item.price }} đ</span
-                  >
-                  <span class="sale" v-if="item.sales"
-                    >{{
-                      item.price * (100 - item.sales)
-                    }}
-                    đ</span
-                  >
-                </div>
-                <div class="btn-order mt-3">
-                  <el-button type="primary" plain
-                    >Đặt hàng</el-button
-                  >
-                </div>
+                  <div class="card-detail-container">
+                    <router-link
+                      :to="{
+                        name: 'DetailBasket',
+                        params: {
+                          slug: item.slug,
+                        },
+                      }"
+                      ><p class="title">
+                        {{ item.name }}
+                      </p></router-link
+                    >
+
+                    <div class="card-detail-description">
+                      <span class="prices"
+                        >{{ item.price }} đ</span
+                      >
+                      <span class="sale" v-if="item.sales"
+                        >{{
+                          item.price * (100 - item.sales)
+                        }}
+                        đ</span
+                      >
+                    </div>
+                    <div class="btn-order mt-3">
+                      <el-button type="primary" plain
+                        >Đặt hàng</el-button
+                      >
+                    </div>
+                  </div>
+                </el-card>
               </div>
-            </el-card>
+            </div>
+            <div class="d-flex justify-content-center mt-5">
+              <el-pagination
+                layout="prev, pager, next"
+                :page-count="props.count"
+                :current-page="props.page"
+                @current-change="handlePagination"
+              />
+            </div>
           </div>
-        </div>
-        <div class="d-flex justify-content-center mt-5">
-          <el-pagination
-            layout="prev, pager, next"
-            :page-count="props.count"
-            :current-page="props.page"
-            @current-change="handlePagination"
-          />
+          <div v-else>
+            <el-empty
+              :image-size="200"
+              :description="'Không có sản phẩm nào'"
+            />
+          </div>
         </div>
       </div>
     </div>
