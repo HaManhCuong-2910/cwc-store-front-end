@@ -5,7 +5,7 @@
         :active="item.active"
         :to="`/${item.href}`"
         v-for="item in data.items"
-        :key="item"
+        :key="item.text"
       >
         {{ item.text }}
       </b-breadcrumb-item>

@@ -1,7 +1,7 @@
 <template>
   <div class="right-site">
     <h1>{{ props.product.name }}</h1>
-    <h2>{{ props.product.price }} đ</h2>
+    <h2>{{ formatNumberMony(props.product.price) }} đ</h2>
     <div class="size">
       <p>Kích cỡ</p>
       <el-radio-group
@@ -45,7 +45,8 @@
       <el-button
         type="danger"
         v-if="isSniped"
-        @click="() => onSnipped(false)"
+        @click="() => onSnipped({ hasEllipsis: false })"
+        plain
         >Đọc thêm</el-button
       >
 
@@ -118,6 +119,7 @@
 
 <script lang="ts">
 import { Quantity, TProduct } from '@/api/products/data';
+import { formatNumberMony } from '@/constant/constant';
 import {
   defineComponent,
   onMounted,
@@ -186,6 +188,7 @@ export default defineComponent({
       isSniped,
       onSnipped,
       handleOrder,
+      formatNumberMony,
     };
   },
 });
