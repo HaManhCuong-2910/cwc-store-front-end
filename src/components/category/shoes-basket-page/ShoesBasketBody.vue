@@ -20,7 +20,7 @@
               <div
                 class="col-3"
                 v-for="item in props.products"
-                :key="item"
+                :key="item._id"
               >
                 <el-card
                   class="card-container redirect-link"
@@ -44,11 +44,16 @@
 
                     <div class="card-detail-description">
                       <span class="prices"
-                        >{{ item.price }} đ</span
+                        >{{
+                          formatNumberMony(item.price)
+                        }}
+                        đ</span
                       >
                       <span class="sale" v-if="item.sales"
                         >{{
-                          item.price * (100 - item.sales)
+                          formatNumberMony(
+                            item.price * (100 - item.sales)
+                          )
                         }}
                         đ</span
                       >
@@ -161,6 +166,7 @@
 
 <script lang="ts">
 import { TProduct } from '@/api/products/data';
+import { formatNumberMony } from '@/constant/constant';
 import {
   defineComponent,
   PropType,
@@ -211,6 +217,7 @@ export default defineComponent({
       props,
       data,
       handlePagination,
+      formatNumberMony,
     };
   },
 });

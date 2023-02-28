@@ -8,7 +8,7 @@
         </h3>
         <span>{{ props.item.timestamp }}</span>
         <p>
-          {{ props.item.description }}
+          {{ props.item.short_description }}
         </p>
       </div>
     </div>
@@ -17,6 +17,7 @@
 
 <style lang="scss" scoped>
 .card-news-contain {
+  color: #000;
   margin-top: 20px;
 
   .news-card-custom {

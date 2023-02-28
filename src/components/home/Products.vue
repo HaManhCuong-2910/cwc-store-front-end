@@ -12,26 +12,43 @@
           :key="item"
           ref="product"
         >
-          <div class="products-contain-card">
-            <div class="products-contain-card-img">
-              <img
-                :src="item.images[0]"
-                alt="Ảnh sản phẩm"
-              />
+          <router-link
+            :to="{
+              name: 'DetailBasket',
+              params: {
+                slug: item.slug,
+              },
+            }"
+          >
+            <div class="products-contain-card">
+              <div class="products-contain-card-img">
+                <img
+                  :src="item.images[0]"
+                  alt="Ảnh sản phẩm"
+                />
+              </div>
+              <div
+                class="products-contain-card-description"
+              >
+                <h4>{{ item.name }}</h4>
+                <p>{{ item.category.name }}</p>
+                <p class="prices">
+                  <span class="red-prices"
+                    >{{
+                      formatNumberMony(item.price * (100 - item.sales))
+                    }}
+                    đ</span
+                  >
+                  <span class="sale-prices"
+                    >{{
+                      formatNumberMony(item.price)
+                    }}
+                    đ</span
+                  >
+                </p>
+              </div>
             </div>
-            <div class="products-contain-card-description">
-              <h4>{{ item.name }}</h4>
-              <p>{{ item.category.name }}</p>
-              <p class="prices">
-                <span class="red-prices"
-                  >{{ item.sales }} đ</span
-                >
-                <span class="sale-prices"
-                  >{{ item.price }} đ</span
-                >
-              </p>
-            </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -48,6 +65,7 @@
 }
 
 .products-contain-card {
+  color: #000;
   .products-contain-card-img {
     border-radius: 12px;
     overflow: hidden;
@@ -85,6 +103,7 @@
 </style>
 
 <script lang="ts">
+import { formatNumberMony } from '@/constant/constant';
 import {
   defineComponent,
   onMounted,
@@ -138,6 +157,7 @@ export default defineComponent({
       data,
       props,
       product,
+      formatNumberMony,
     };
   },
 });

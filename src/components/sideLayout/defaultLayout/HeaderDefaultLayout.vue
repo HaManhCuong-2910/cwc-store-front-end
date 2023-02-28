@@ -59,8 +59,8 @@
 
 <style lang="scss" scoped>
 .logo-home {
-  width: 110px;
-  height: 45px;
+  width: 140px;
+  height: 48px;
 }
 .nav-bar-custom {
   height: 70px;

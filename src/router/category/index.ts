@@ -16,7 +16,18 @@ export const categoryRoute = [
       layout: 'DefaultLayout',
       title: 'cwc-store',
     },
-    component: () => import('@/views/category/News.vue'),
+    component: () =>
+      import('@/views/category/news/News.vue'),
+  },
+  {
+    path: '/chi-tiet-tin-tuc/:news_id',
+    name: 'DetailNews',
+    meta: {
+      layout: 'DefaultLayout',
+      title: 'cwc-store',
+    },
+    component: () =>
+      import('@/views/category/news/DetailNews.vue'),
   },
   {
     path: '/gioi-thieu',
