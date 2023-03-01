@@ -36,3 +36,8 @@ export type TProductCart = {
   size: number;
   size_id: string;
 };
+
+export interface TDataLocation {
+  link: string;
+  value: string;
+}

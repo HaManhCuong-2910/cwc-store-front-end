@@ -93,6 +93,7 @@ import {
   reactive,
   watch,
 } from 'vue';
+import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 
 export default defineComponent({
@@ -104,15 +105,11 @@ export default defineComponent({
       BuyerInformation: false,
       Order: false,
     });
-    const { timeline_cart } = store.state;
+    const route = useRoute();
+    const { params } = route;
 
     const handleTimeLine = (value: ETimeline) => {
       switch (value) {
-        case ETimeline.InformationLine:
-          data.InformationLine = true;
-          data.BuyerInformation = false;
-          data.Order = false;
-          break;
         case ETimeline.BuyerInformation:
           data.InformationLine = true;
           data.BuyerInformation = true;
@@ -123,18 +120,24 @@ export default defineComponent({
           data.BuyerInformation = true;
           data.Order = true;
           break;
+        default:
+          data.InformationLine = true;
+          data.BuyerInformation = false;
+          data.Order = false;
+          break;
       }
     };
 
     watch(
-      () => timeline_cart,
-      (value: ETimeline) => {
-        handleTimeLine(value);
-      }
+      () => route.params,
+      (value) => {
+        handleTimeLine(value.time_line as ETimeline);
+      },
+      { deep: true }
     );
 
     onMounted(() => {
-      handleTimeLine(timeline_cart);
+      handleTimeLine(params.time_line as ETimeline);
     });
 
     return {

@@ -6,6 +6,7 @@ type TCartMutations = {
     state: any,
     timeline: ETimeline
   ) => void;
+  clearProductToCart: (state: any) => void;
 };
 
 const addProductToCart = (state: any, product: any) => {
@@ -25,6 +26,11 @@ const addProductToCart = (state: any, product: any) => {
   );
 };
 
+const clearProductToCart = (state: any) => {
+  state.cart = [];
+  sessionStorage.removeItem('cart');
+};
+
 const changeTimeLineCart = (
   state: any,
   timeline: ETimeline
@@ -35,4 +41,5 @@ const changeTimeLineCart = (
 export const handleCartMutations: TCartMutations = {
   addProductToCart,
   changeTimeLineCart,
+  clearProductToCart,
 };
