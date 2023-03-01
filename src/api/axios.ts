@@ -38,6 +38,6 @@ instance.interceptors.response.use(
     return Promise.reject(response);
   },
   async (error: any) => {
-    return Promise.reject(error.response?.data?.error);
+    return Promise.reject(error.response?.data);
   }
 );

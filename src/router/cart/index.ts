@@ -1,6 +1,6 @@
 export const cartPageRoute = [
   {
-    path: '/gio-hang',
+    path: '/gio-hang/:time_line?',
     name: 'CartPage',
     meta: {
       layout: 'DefaultLayout',
