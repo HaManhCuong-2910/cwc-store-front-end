@@ -48,10 +48,21 @@
       </b-navbar-nav>
       <div class="child-components">
         <InputSearchNav />
-        <font-awesome-icon
-          class="icon"
-          icon="fa-solid fa-bag-shopping"
-        />
+        <router-link
+          :to="{
+            name: 'CartPage',
+          }"
+        >
+          <el-badge
+            :value="numberOrderCart"
+            class="cart-icon"
+          >
+            <font-awesome-icon
+              class="icon"
+              icon="fa-solid fa-bag-shopping"
+            />
+          </el-badge>
+        </router-link>
       </div>
     </b-collapse>
   </b-navbar>
@@ -67,6 +78,7 @@
 
   .nav-item {
     position: relative;
+    transform-origin: center center;
     margin: 0px 20px;
 
     .child-nav {
@@ -82,7 +94,7 @@
       width: 100%;
       height: 2px;
       background-color: #7f8c8d;
-      transform-origin: center;
+      transform-origin: center center;
       animation: AShowEffectNavItem linear 0.2s;
     }
 
@@ -164,10 +176,18 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue';
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
 import { getListCategory } from '@/api/category/index';
 import InputSearchNav from '@/components/sideLayout/defaultLayout/child-components/InputSearchNav.vue';
 import { AxiosResponse } from 'axios';
+import { useStore } from 'vuex';
+import { Quantity, TProduct } from '@/api/products/data';
 type THeaderData = {
   listCategory: any[] | AxiosResponse<any[], any>;
 };
@@ -177,9 +197,31 @@ export default defineComponent({
     InputSearchNav,
   },
   setup() {
+    const store = useStore();
+
+    const { cart } = store.state;
+
+    const numberOrderCart = ref<number>(cart.length);
+
     const data: THeaderData = reactive({
       listCategory: [],
     });
+
+    watch(
+      () => cart,
+      (value) => {
+        let sumOrderCart = 0;
+        cart.forEach((item: Quantity) => {
+          sumOrderCart += item.quantity;
+        });
+        numberOrderCart.value = sumOrderCart;
+        sessionStorage.setItem(
+          'cart',
+          JSON.stringify(cart)
+        );
+      },
+      { deep: true }
+    );
 
     onMounted(async () => {
       data.listCategory = (await getListCategory()).data;
@@ -187,6 +229,7 @@ export default defineComponent({
 
     return {
       data,
+      numberOrderCart,
     };
   },
 });

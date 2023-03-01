@@ -5,6 +5,7 @@ import {
 } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import { authRoute } from './auth';
+import { cartPageRoute } from './cart';
 import { categoryRoute } from './category';
 import { detailProductRoute } from './detail-product';
 
@@ -12,6 +13,7 @@ const routes: Array<RouteRecordRaw> = [
   ...authRoute,
   ...categoryRoute,
   ...detailProductRoute,
+  ...cartPageRoute,
   {
     path: '/',
     name: 'home',

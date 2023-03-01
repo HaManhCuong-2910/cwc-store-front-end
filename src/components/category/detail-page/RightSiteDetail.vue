@@ -125,9 +125,11 @@ import {
   onMounted,
   reactive,
   ref,
+  toRefs,
   watch,
 } from 'vue';
 import { useStore } from 'vuex';
+import { ElNotification } from 'element-plus';
 interface TProps {
   product: TProduct;
 }
@@ -137,6 +139,12 @@ export default defineComponent({
   props: ['product'],
   setup(props: TProps) {
     const store = useStore();
+    const { price, sales } = toRefs(props.product);
+    const newPrice = ref<number>(
+      sales.value
+        ? price.value * (sales.value / 100)
+        : price.value
+    );
     const maxQuantity = ref<number>(10);
     const quantity = ref<number>(1);
     const isSniped = ref<boolean>(true);
@@ -157,13 +165,22 @@ export default defineComponent({
     };
 
     const handleOrder = () => {
-      const { _id, name } = props.product;
+      const { _id, name, images } = props.product;
       store.dispatch('addProductToCart', {
         id: _id,
         name: name,
         quantity: quantity.value,
+        image: images[0],
+        price: newPrice.value,
+        maxQuantity: maxQuantity.value,
         size: getSizeDetail(activeSize.value)?.size,
         size_id: getSizeDetail(activeSize.value)?._id,
+      });
+      ElNotification({
+        title: 'Success',
+        message: 'Thêm vào giỏ hàng thành công',
+        type: 'success',
+        position: 'bottom-right',
       });
     };
 
@@ -186,6 +203,7 @@ export default defineComponent({
       activeSize,
       props,
       isSniped,
+      newPrice,
       onSnipped,
       handleOrder,
       formatNumberMony,

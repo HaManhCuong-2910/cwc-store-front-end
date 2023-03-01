@@ -26,3 +26,13 @@ export const formatNumberMony = (
     .format(valueNumber as number)
     .split(',')[0];
 };
+export type TProductCart = {
+  id: string;
+  name: string;
+  quantity: number;
+  image: string;
+  price: number;
+  maxQuantity: number;
+  size: number;
+  size_id: string;
+};
