@@ -9,7 +9,6 @@ type TCartActions = {
     { commit }: any,
     timeline: ETimeline
   ) => void;
-  clearProductToCart: ({ commit }: any) => void;
 };
 
 const addProductToCart = (
@@ -17,10 +16,6 @@ const addProductToCart = (
   product: TProduct
 ) => {
   commit('addProductToCart', product);
-};
-
-const clearProductToCart = ({ commit }: any) => {
-  commit('clearProductToCart');
 };
 
 const changeTimeLineCart = (
@@ -33,5 +28,4 @@ const changeTimeLineCart = (
 export const handleCartActions: TCartActions = {
   addProductToCart,
   changeTimeLineCart,
-  clearProductToCart,
 };

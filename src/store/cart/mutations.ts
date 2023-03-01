@@ -1,12 +1,13 @@
 import { TProduct } from '@/api/products/data';
 import { ETimeline } from './state';
 type TCartMutations = {
-  addProductToCart: (state: any, product: TProduct) => void;
+  addProductToCart: (state: any, product: any) => void;
+  removeProduct: (state: any, index: number) => void;
+  clearProductToCart: (state: any) => void;
   changeTimeLineCart: (
     state: any,
     timeline: ETimeline
   ) => void;
-  clearProductToCart: (state: any) => void;
 };
 
 const addProductToCart = (state: any, product: any) => {
@@ -26,8 +27,16 @@ const addProductToCart = (state: any, product: any) => {
   );
 };
 
+const removeProduct = (state: any, index: number) => {
+  state.cart.splice(index, 1);
+  sessionStorage.setItem(
+    'cart',
+    JSON.stringify(state.cart)
+  );
+};
+
 const clearProductToCart = (state: any) => {
-  state.cart = [];
+  state.cart.splice(0, state.cart.length);
   sessionStorage.removeItem('cart');
 };
 
@@ -42,4 +51,5 @@ export const handleCartMutations: TCartMutations = {
   addProductToCart,
   changeTimeLineCart,
   clearProductToCart,
+  removeProduct,
 };
