@@ -6,6 +6,7 @@ export type TProduct = {
   category: Category;
   price: number;
   sales: number;
+  sales_percent: number;
   slug: string;
   images: string[];
   quantities: Quantity[];
@@ -37,6 +38,7 @@ export interface TGetListProducts {
   description?: string;
   price?: number;
   sales?: number;
+  sales_percent?: number;
   images?: string[];
   is_hot?: boolean;
   quantities?: Quantity[];

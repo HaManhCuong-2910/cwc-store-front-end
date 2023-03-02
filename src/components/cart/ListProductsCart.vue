@@ -11,15 +11,24 @@
     </el-table-column>
     <el-table-column label="Tên sản phẩm" align="center">
       <template #default="scope">
-        <p>
-          {{ scope.row.name }} -
-          {{ scope.row.size }}
-        </p>
+        <router-link
+          :to="{
+            name: 'DetailBasket',
+            params: {
+              slug: scope.row.slug,
+            },
+          }"
+        >
+          <p class="title-product">
+            {{ scope.row.name }} -
+            {{ scope.row.size }}
+          </p></router-link
+        >
       </template>
     </el-table-column>
     <el-table-column label="Giá sản phẩm" align="center">
       <template #default="scope">
-        <b>{{ scope.row.price }}đ</b>
+        <b>{{ formatNumberMony(scope.row.price) }} đ</b>
       </template>
     </el-table-column>
     <el-table-column label="Số lượng" align="center">
@@ -52,6 +61,15 @@
   }
 }
 
+.title-product {
+  color: #000;
+
+  &:hover {
+    color: #ff3f34;
+    transition: 0.3s;
+  }
+}
+
 .icon-remove-product {
   font-size: 16px;
   cursor: pointer;
@@ -60,7 +78,10 @@
 
 <script lang="ts">
 import { TProduct } from '@/api/products/data';
-import { TProductCart } from '@/constant/constant';
+import {
+  formatNumberMony,
+  TProductCart,
+} from '@/constant/constant';
 import {
   defineComponent,
   onMounted,
@@ -102,6 +123,7 @@ export default defineComponent({
     return {
       data,
       handleRemoveProduct,
+      formatNumberMony,
     };
   },
 });

@@ -20,7 +20,9 @@
           <p><b>Cộng giỏ hàng</b></p>
           <p class="d-flex justify-content-between">
             <span>Tạm tính</span>
-            <span>{{ data.sumPrice }}đ</span>
+            <span
+              >{{ formatNumberMony(data.sumPrice) }} đ</span
+            >
           </p>
           <hr />
           <p><b>Giao hàng</b></p>
@@ -37,7 +39,9 @@
           <hr />
           <p class="d-flex justify-content-between">
             <b>Tổng</b>
-            <b class="price">{{ data.sumPrice }} đ</b>
+            <b class="price"
+              >{{ formatNumberMony(data.sumPrice) }} đ</b
+            >
           </p>
           <el-button
             v-if="
@@ -81,6 +85,7 @@
 <script lang="ts">
 import { TProductCart } from '@/constant/constant';
 import { ETimeline } from '@/store/cart/state';
+import { formatNumberMony } from '@/constant/constant';
 import {
   defineComponent,
   onMounted,
@@ -168,6 +173,7 @@ export default defineComponent({
       handleBuyerClick,
       EDelivery,
       ETimeline,
+      formatNumberMony,
     };
   },
 });

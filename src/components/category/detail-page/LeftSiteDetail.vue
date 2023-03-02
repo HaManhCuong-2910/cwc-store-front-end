@@ -87,8 +87,8 @@
       margin-bottom: 18px;
       border-radius: 10px;
       border: 1px solid #7f8c8d;
-      width: 100px;
-      height: 100px;
+      width: 100%;
+      height: 100%;
     }
   }
 }

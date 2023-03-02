@@ -1,7 +1,11 @@
 import { TProduct } from '@/api/products/data';
+import { TProductCart } from '@/constant/constant';
 import { ETimeline } from './state';
 type TCartMutations = {
-  addProductToCart: (state: any, product: any) => void;
+  addProductToCart: (
+    state: any,
+    product: TProductCart
+  ) => void;
   removeProduct: (state: any, index: number) => void;
   clearProductToCart: (state: any) => void;
   changeTimeLineCart: (
@@ -10,10 +14,13 @@ type TCartMutations = {
   ) => void;
 };
 
-const addProductToCart = (state: any, product: any) => {
+const addProductToCart = (
+  state: any,
+  product: TProductCart
+) => {
   const indexProduct = state.cart.findIndex(
     (item: any) =>
-      item._id === product._id &&
+      item.id === product.id &&
       item.size_id === product.size_id
   );
   if (indexProduct >= 0) {
