@@ -156,7 +156,7 @@ export default defineComponent({
       );
       if (resultOrder) {
         NProgress.done();
-        store.dispatch('clearProductToCart');
+        store.commit('clearProductToCart');
         router.push({
           name: 'CartPage',
           params: {

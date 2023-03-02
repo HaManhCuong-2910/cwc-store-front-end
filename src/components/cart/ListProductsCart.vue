@@ -31,6 +31,15 @@
         />
       </template>
     </el-table-column>
+    <el-table-column label="" align="center">
+      <template #default="scope">
+        <font-awesome-icon
+          class="icon-remove-product"
+          @click="handleRemoveProduct(scope.$index)"
+          icon="fa-solid fa-xmark"
+        />
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
@@ -41,6 +50,11 @@
     width: 150px;
     height: 150px;
   }
+}
+
+.icon-remove-product {
+  font-size: 16px;
+  cursor: pointer;
 }
 </style>
 
@@ -68,6 +82,11 @@ export default defineComponent({
     const store = useStore();
 
     const { cart } = store.state;
+
+    const handleRemoveProduct = (index: number) => {
+      store.commit('removeProduct', index);
+    };
+
     onMounted(() => {
       data.dataTable = cart;
     });
@@ -82,6 +101,7 @@ export default defineComponent({
 
     return {
       data,
+      handleRemoveProduct,
     };
   },
 });
