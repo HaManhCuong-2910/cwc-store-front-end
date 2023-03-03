@@ -21,7 +21,7 @@
           <div v-if="data.products.length > 0">
             <div class="row">
               <div
-                class="col-3"
+                class="col-3 mb-3"
                 v-for="item in data.products"
                 :key="item._id"
               >
@@ -62,20 +62,6 @@
                           formatNumberMony(item.price)
                         }}
                         đ</span
-                      >
-                    </div>
-                    <div class="btn-order mt-3">
-                      <router-link
-                        :to="{
-                          name: 'DetailBasket',
-                          params: {
-                            slug: item.slug,
-                          },
-                        }"
-                      >
-                        <el-button type="primary" plain
-                          >Đặt hàng</el-button
-                        ></router-link
                       >
                     </div>
                   </div>
@@ -139,6 +125,8 @@
     margin-bottom: 20px;
     .title {
       margin: 12px;
+      font-size: 1rem;
+      font-weight: 500;
       text-align: center;
       color: #000;
 
