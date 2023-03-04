@@ -19,6 +19,11 @@
       </el-radio-group>
     </div>
     <div class="order">
+      <p>
+        Số lượng còn lại: <span>{{ maxQuantity }}</span>
+      </p>
+    </div>
+    <div class="order">
       <p>Số lượng</p>
       <el-input-number
         class="quantity"
@@ -145,7 +150,9 @@ export default defineComponent({
     const newPrice = ref<number>(
       sales.value ? sales.value : price.value
     );
-    const maxQuantity = ref<number>(10);
+    const maxQuantity = ref<number>(
+      props.product.quantities[0].quantity
+    );
     const quantity = ref<number>(1);
     const isSniped = ref<boolean>(true);
     const activeSize = ref<number>(

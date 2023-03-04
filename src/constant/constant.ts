@@ -14,6 +14,19 @@ export type TDataCardNews = {
   description: string;
 };
 
+export interface User {
+  status: string;
+  _id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  age: number;
+  roles: string[];
+  type: string;
+  avatar: any;
+}
+
 export const formatNumberMony = (
   value: number | string
 ) => {

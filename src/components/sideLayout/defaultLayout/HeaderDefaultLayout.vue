@@ -63,6 +63,16 @@
             />
           </el-badge>
         </router-link>
+        <router-link
+          :to="{
+            name: 'Login',
+          }"
+        >
+          <font-awesome-icon
+            class="icon"
+            icon="fa-solid fa-user"
+          />
+        </router-link>
       </div>
     </b-collapse>
   </b-navbar>
@@ -225,6 +235,12 @@ export default defineComponent({
 
     onMounted(async () => {
       data.listCategory = (await getListCategory()).data;
+      let sumOrderCart = 0;
+      cart.forEach((item: Quantity) => {
+        sumOrderCart += item.quantity;
+      });
+      numberOrderCart.value = sumOrderCart;
+      sessionStorage.setItem('cart', JSON.stringify(cart));
     });
 
     return {
