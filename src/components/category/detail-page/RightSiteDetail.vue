@@ -1,7 +1,7 @@
 <template>
   <div class="right-site">
     <h1>{{ props.product.name }}</h1>
-    <h2>{{ formatNumberMony(props.product.price) }} đ</h2>
+    <h2>{{ formatNumberMony(newPrice) }} đ</h2>
     <div class="size">
       <p>Kích cỡ</p>
       <el-radio-group
@@ -130,6 +130,7 @@ import {
 } from 'vue';
 import { useStore } from 'vuex';
 import { ElNotification } from 'element-plus';
+import { useRouter } from 'vue-router';
 interface TProps {
   product: TProduct;
 }
@@ -138,12 +139,11 @@ export default defineComponent({
   name: 'RightSiteDetail',
   props: ['product'],
   setup(props: TProps) {
+    const router = useRouter();
     const store = useStore();
     const { price, sales } = toRefs(props.product);
     const newPrice = ref<number>(
-      sales.value
-        ? price.value * (sales.value / 100)
-        : price.value
+      sales.value ? sales.value : price.value
     );
     const maxQuantity = ref<number>(10);
     const quantity = ref<number>(1);
@@ -165,10 +165,11 @@ export default defineComponent({
     };
 
     const handleOrder = () => {
-      const { _id, name, images } = props.product;
+      const { _id, name, images, slug } = props.product;
       store.dispatch('addProductToCart', {
         id: _id,
         name: name,
+        slug: slug,
         quantity: quantity.value,
         image: images[0],
         price: newPrice.value,
@@ -177,10 +178,17 @@ export default defineComponent({
         size_id: getSizeDetail(activeSize.value)?._id,
       });
       ElNotification({
-        title: 'Success',
+        title: 'Thành công',
         message: 'Thêm vào giỏ hàng thành công',
         type: 'success',
         position: 'bottom-right',
+        duration: 2000,
+        customClass: 'cursor-pointer',
+        onClick: () => {
+          router.push({
+            name: 'CartPage',
+          });
+        },
       });
     };
 

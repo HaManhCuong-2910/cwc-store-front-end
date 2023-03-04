@@ -16,6 +16,8 @@
       :page="data.page"
       :count="data.count"
       @changePage="handleChangePage"
+      @actionLoading="actionLoading"
+      @searchProducts="searchProducts"
     />
   </div>
 </template>
@@ -79,17 +81,21 @@ export default {
             href: slug as string,
             active: true,
           });
-          await getProductsFilter({ limit: 1 });
+          await getProductsFilter({
+            category: data.category_id,
+            limit: 1,
+          });
         }
+      } else {
+        document.title = 'Giày bóng rổ';
+        data.category_id = '';
+        await getProductsFilter({ limit: 1 });
       }
     };
 
     const getProductsFilter = async (filter?: any) => {
       data.loadingProducts = true;
-      const products = await getProducts({
-        category: data.category_id,
-        ...filter,
-      });
+      const products = await getProducts(filter);
 
       if (products.status === 200) {
         data.loadingProducts = false;
@@ -99,11 +105,30 @@ export default {
       }
     };
 
+    const actionLoading = (isLoading: boolean) => {
+      data.loadingProducts = isLoading;
+    };
+
+    const searchProducts = (dataProducts: {
+      data: TProduct[];
+      page: number;
+      count: number;
+      maxPrices: number;
+    }) => {
+      data.products = dataProducts.data;
+      data.page = Number(dataProducts.page);
+      data.count = dataProducts.count;
+    };
+
     const handleChangePage = async (
       page: number,
       limit = 1
     ) => {
-      getProductsFilter({ page, limit });
+      let queryCategory = {};
+      if (data.category_id) {
+        queryCategory = { category: data.category_id };
+      }
+      getProductsFilter({ ...queryCategory, page, limit });
     };
 
     watch(
@@ -141,7 +166,12 @@ export default {
       await handleBreadcrumb(router.params);
     });
 
-    return { data, handleChangePage };
+    return {
+      data,
+      handleChangePage,
+      actionLoading,
+      searchProducts,
+    };
   },
 };
 </script>

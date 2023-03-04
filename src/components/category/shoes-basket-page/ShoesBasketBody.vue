@@ -2,24 +2,27 @@
   <div class="main-category mt-5">
     <div class="row">
       <div class="col-3">
-        <LeftSideBasketPage />
+        <LeftSideBasketPage
+          @actionLoading="actionLoading"
+          @searchProducts="handleSearchProducts"
+        />
       </div>
       <div class="col-9">
         <div class="row" v-if="data.isLoading">
           <div
             class="col-3"
-            v-for="index in 4"
+            v-for="index in 16"
             :key="index"
           >
             <LoadingCard />
           </div>
         </div>
         <div v-else>
-          <div v-if="props.products.length > 0">
+          <div v-if="data.products.length > 0">
             <div class="row">
               <div
-                class="col-3"
-                v-for="item in props.products"
+                class="col-3 mb-3"
+                v-for="item in data.products"
                 :key="item._id"
               >
                 <el-card
@@ -45,22 +48,20 @@
                     <div class="card-detail-description">
                       <span class="prices"
                         >{{
+                          formatNumberMony(item.sales)
+                        }}
+                        đ</span
+                      >
+                      <span
+                        class="sale"
+                        v-if="
+                          item.sales &&
+                          item.sales_percent > 0
+                        "
+                        >{{
                           formatNumberMony(item.price)
                         }}
                         đ</span
-                      >
-                      <span class="sale" v-if="item.sales"
-                        >{{
-                          formatNumberMony(
-                            item.price * (100 - item.sales)
-                          )
-                        }}
-                        đ</span
-                      >
-                    </div>
-                    <div class="btn-order mt-3">
-                      <el-button type="primary" plain
-                        >Đặt hàng</el-button
                       >
                     </div>
                   </div>
@@ -124,6 +125,8 @@
     margin-bottom: 20px;
     .title {
       margin: 12px;
+      font-size: 1rem;
+      font-weight: 500;
       text-align: center;
       color: #000;
 
@@ -176,6 +179,11 @@ import {
 import LoadingCard from '@/components/loading/LoadingCard.vue';
 import LeftSideBasketPage from '@/components/category/shoes-basket-page/LeftSideBasketPage.vue';
 
+interface TDataBody {
+  isLoading: boolean;
+  products: TProduct[];
+}
+
 export default defineComponent({
   components: { LoadingCard, LeftSideBasketPage },
   props: {
@@ -196,16 +204,37 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['changePage'],
+  emits: ['changePage', 'actionLoading', 'searchProducts'],
   setup(props, { emit }) {
-    const data = reactive({
+    const data = reactive<TDataBody>({
       isLoading: false,
+      products: [],
     });
 
     watch(
       () => props.loading,
       (value: boolean) => {
         data.isLoading = value;
+      }
+    );
+
+    const actionLoading = (isLoading: boolean) => {
+      emit('actionLoading', isLoading);
+    };
+
+    const handleSearchProducts = (dataProducts: {
+      data: TProduct[];
+      page: number;
+      count: number;
+      maxPrices: number;
+    }) => {
+      emit('searchProducts', dataProducts);
+    };
+
+    watch(
+      () => props.products,
+      (value) => {
+        data.products = props.products;
       }
     );
 
@@ -218,6 +247,8 @@ export default defineComponent({
       data,
       handlePagination,
       formatNumberMony,
+      actionLoading,
+      handleSearchProducts,
     };
   },
 });

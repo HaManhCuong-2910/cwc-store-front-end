@@ -32,6 +32,7 @@ export type TProductCart = {
   quantity: number;
   image: string;
   price: number;
+  slug: string;
   maxQuantity: number;
   size: number;
   size_id: string;

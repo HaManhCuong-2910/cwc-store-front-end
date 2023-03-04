@@ -1,9 +1,10 @@
 import { TProduct } from '@/api/products/data';
+import { TProductCart } from '@/constant/constant';
 import { ETimeline } from './state';
 type TCartActions = {
   addProductToCart: (
     { commit }: any,
-    product: TProduct
+    product: TProductCart
   ) => void;
   changeTimeLineCart: (
     { commit }: any,
@@ -13,7 +14,7 @@ type TCartActions = {
 
 const addProductToCart = (
   { commit }: any,
-  product: TProduct
+  product: TProductCart
 ) => {
   commit('addProductToCart', product);
 };

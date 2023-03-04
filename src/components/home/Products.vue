@@ -35,11 +35,15 @@
                 <p class="prices">
                   <span class="red-prices"
                     >{{
-                      formatNumberMony(item.price * (100 - item.sales))
+                      formatNumberMony(item.sales)
                     }}
                     đ</span
                   >
-                  <span class="sale-prices"
+                  <span
+                    class="sale-prices"
+                    v-if="
+                      item.sales && item.sales_percent > 0
+                    "
                     >{{
                       formatNumberMony(item.price)
                     }}
@@ -80,6 +84,11 @@
 
     h4 {
       font-size: 19px;
+
+      &:hover {
+        color: #ff3f34;
+        transition: 0.3s;
+      }
     }
 
     p {

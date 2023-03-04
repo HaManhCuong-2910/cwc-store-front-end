@@ -11,13 +11,13 @@
       </b-breadcrumb-item>
     </b-breadcrumb>
     <div class="row mt-5">
-      <div class="col-5">
+      <div class="col-4">
         <LeftSiteDetail
           :images="data.images"
           v-if="data.images.length > 0"
         />
       </div>
-      <div class="col-7">
+      <div class="col-8">
         <RightSiteDetail
           :product="data.product"
           v-if="data.product"

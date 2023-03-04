@@ -8,7 +8,7 @@ export const OrderCart = async (data: TOrderCart) => {
       data
     );
     return [res, null];
-  } catch (err) {
+  } catch (err: any) {
     return [null, err];
   }
 };

@@ -56,10 +56,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+} from 'vue';
 import ProvinceInput from '@/components/cart/location/ProvinceInput.vue';
 import DistrictInput from '@/components/cart/location/DistrictInput.vue';
-import { FormInstance, FormRules } from 'element-plus';
+import {
+  ElLoading,
+  FormInstance,
+  FormRules,
+} from 'element-plus';
+import Swal from 'sweetalert2';
 import { useStore } from 'vuex';
 import { TOrderCart } from '@/api/cart/data';
 import { OrderCart } from '@/api/cart';
@@ -80,7 +90,8 @@ export default defineComponent({
     ProvinceInput,
     DistrictInput,
   },
-  setup() {
+  emits: ['pushResultOrder'],
+  setup(props, { emit }) {
     const store = useStore();
     const router = useRouter();
     const { cart } = store.state;
@@ -151,20 +162,39 @@ export default defineComponent({
         data: filterCart,
       };
       NProgress.start();
+      const loading = ElLoading.service({
+        lock: true,
+        text: 'Loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+      });
       const [resultOrder, error] = await OrderCart(
         dataOrderCart
       );
+      NProgress.done();
+      loading.close();
       if (resultOrder) {
-        NProgress.done();
-        store.commit('clearProductToCart');
-        router.push({
-          name: 'CartPage',
-          params: {
-            time_line: ETimeline.Order,
-          },
-        });
+        if (resultOrder.data.status === 200) {
+          store.commit('clearProductToCart');
+          emit('pushResultOrder', resultOrder.data);
+          router.push({
+            name: 'CartPage',
+            params: {
+              time_line: ETimeline.Order,
+            },
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Đặt hàng không thành công',
+            text: resultOrder.data.message,
+          });
+        }
       } else {
-        // console.log('resultOrder', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Có lỗi xảy ra!',
+          text: error.message[0],
+        });
       }
     };
 

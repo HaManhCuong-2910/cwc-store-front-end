@@ -9,6 +9,7 @@ export const getProducts = async (
     data: TProduct[];
     page: number;
     count: number;
+    maxPrices: number;
   }>('/post/list', {
     params: query,
   });
