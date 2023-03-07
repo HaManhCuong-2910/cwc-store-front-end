@@ -18,7 +18,7 @@ const setAccessToken = (
   }
 ) => {
   state.user = data.user;
-  sessionStorage.setItem('access_token', data.access_token);
+  state.access_token = data.access_token;
 };
 
 export const handleAuthMutations: TAuthMutations = {

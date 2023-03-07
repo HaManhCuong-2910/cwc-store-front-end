@@ -1,11 +1,19 @@
+import { User } from '@/constant/constant';
 import { Router } from 'vue-router';
+import { Store } from 'vuex';
 
-const getTokenFromClient = () => {
-  return sessionStorage.getItem('access_token');
+const getTokenFromClient = (store: Store<any>) => {
+  return store.state.access_token;
 };
 
-const storeToken = (access_token: string) => {
-  sessionStorage.setItem('access_token', access_token);
+const storeToken = (
+  data: {
+    access_token: string;
+    user: User | null;
+  },
+  store: Store<any>
+) => {
+  store.commit('setAccessToken', data);
   return;
 };
 

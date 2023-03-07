@@ -15,7 +15,8 @@ export const setupInterceptors = (
 ) => {
   instance.interceptors.request.use(
     (config) => {
-      const accessToken = serviceUser.getTokenFromClient();
+      const accessToken =
+        serviceUser.getTokenFromClient(store);
       if (!!accessToken && config.headers) {
         config.headers[
           'Authorization'
@@ -46,7 +47,11 @@ export const setupInterceptors = (
       if (error.response?.data?.statusCode === 406) {
         const [data, errorApi] = await refreshToken();
         if (data.data && !errorApi) {
-          serviceUser.storeToken(data.data);
+          const { access_token, user } = data.data;
+          serviceUser.storeToken(
+            { access_token, user },
+            store
+          );
           return instance(error.response.config);
         } else {
           serviceUser.LoginAgain(router);

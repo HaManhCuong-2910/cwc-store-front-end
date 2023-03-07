@@ -6,8 +6,8 @@ export type TAuthState = {
 };
 
 export const handleAuthState: TAuthState = {
-  access_token: sessionStorage.getItem('access_token')
-    ? (sessionStorage.getItem('access_token') as string)
+  access_token: localStorage.getItem('access_token')
+    ? (localStorage.getItem('access_token') as string)
     : '',
   user: null,
 };

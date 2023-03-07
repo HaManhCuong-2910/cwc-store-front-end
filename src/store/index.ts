@@ -10,6 +10,7 @@ const vuexPersist = new VuexPersistence({
   storage: window.localStorage,
   reducer: (state: any) => ({
     user: state.user,
+    access_token: state.access_token,
   }),
 });
 
