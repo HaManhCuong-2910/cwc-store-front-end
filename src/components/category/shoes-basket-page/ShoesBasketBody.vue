@@ -91,7 +91,6 @@
 
 <style lang="scss" scoped>
 .card-container {
-  width: 90%;
   overflow: hidden;
   margin: auto;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,

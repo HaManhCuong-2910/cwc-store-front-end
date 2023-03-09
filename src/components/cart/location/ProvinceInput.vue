@@ -1,11 +1,11 @@
 <template>
-  <el-form-item label="Tỉnh/Thành phố">
+  <el-form-item label="Tỉnh/Thành" prop="province_id">
     <el-autocomplete
       v-model="data.valueProvince"
       :fetch-suggestions="querySearch"
       clearable
       class="w-100"
-      placeholder="Nhập tỉnh / thành phố"
+      placeholder="Nhập tỉnh / thành"
       @select="handleSelectProvince"
     />
   </el-form-item>

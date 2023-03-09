@@ -1,13 +1,16 @@
 <template>
-  <div class="login">Đăng nhập</div>
+  <div class="login">
+    <Login />
+  </div>
 </template>
 
 <script lang="ts">
 import { reactive } from '@vue/reactivity';
 import { onMounted } from 'vue';
+import Login from '@/components/auth/login/Login.vue';
 
 export default {
-  components: {},
+  components: { Login },
   setup() {
     return {};
   },
