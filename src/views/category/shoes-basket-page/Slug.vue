@@ -83,13 +83,16 @@ export default {
           });
           await getProductsFilter({
             category: data.category_id,
-            limit: 1,
+            limit: 16,
           });
         }
       } else {
         document.title = 'Giày bóng rổ';
         data.category_id = '';
-        await getProductsFilter({ limit: 1 });
+        await getProductsFilter({
+          ...router.query,
+          limit: 16,
+        });
       }
     };
 
@@ -122,7 +125,7 @@ export default {
 
     const handleChangePage = async (
       page: number,
-      limit = 1
+      limit = 16
     ) => {
       let queryCategory = {};
       if (data.category_id) {

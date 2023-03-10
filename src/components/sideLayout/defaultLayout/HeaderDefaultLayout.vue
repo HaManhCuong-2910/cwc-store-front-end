@@ -67,12 +67,31 @@
           :to="{
             name: 'Login',
           }"
+          v-show="!data.isLoginUser"
         >
           <font-awesome-icon
             class="icon"
             icon="fa-solid fa-user"
           />
         </router-link>
+        <div v-show="data.isLoginUser">
+          <el-dropdown :hide-on-click="true">
+            <el-avatar
+              class="custom-size-avatar"
+              :src="data.userAvatar"
+            />
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item
+                  >Thông tin tài khoản</el-dropdown-item
+                >
+                <el-dropdown-item @click="handleLogout"
+                  >Đăng xuất</el-dropdown-item
+                >
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
       </div>
     </b-collapse>
   </b-navbar>
@@ -105,7 +124,7 @@
       height: 2px;
       background-color: #7f8c8d;
       transform-origin: center center;
-      animation: AShowEffectNavItem linear 0.2s;
+      animation: AShowEffectNavItem linear 0.3s;
     }
 
     &:hover {
@@ -152,6 +171,12 @@
   }
 }
 
+.custom-size-avatar {
+  width: 30px;
+  height: 30px;
+  margin-left: 14px;
+}
+
 .child-components {
   display: flex;
   align-items: center;
@@ -177,10 +202,10 @@
 }
 @keyframes AShowEffectNavItem {
   0% {
-    width: 0%;
+    transform: scale(0);
   }
   100% {
-    width: 100%;
+    transform: scale(1);
   }
 }
 </style>
@@ -198,8 +223,12 @@ import InputSearchNav from '@/components/sideLayout/defaultLayout/child-componen
 import { AxiosResponse } from 'axios';
 import { useStore } from 'vuex';
 import { Quantity, TProduct } from '@/api/products/data';
+import router from '@/router';
+import { fa } from 'element-plus/es/locale';
 type THeaderData = {
   listCategory: any[] | AxiosResponse<any[], any>;
+  isLoginUser: boolean;
+  userAvatar: string;
 };
 
 export default defineComponent({
@@ -209,12 +238,16 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    const { cart } = store.state;
+    const { cart, user } = store.state;
 
     const numberOrderCart = ref<number>(cart.length);
 
     const data: THeaderData = reactive({
       listCategory: [],
+      isLoginUser: user?._id ? true : false,
+      userAvatar: user?.avatar
+        ? user.avatar
+        : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
     });
 
     watch(
@@ -233,6 +266,21 @@ export default defineComponent({
       { deep: true }
     );
 
+    watch(
+      () => store.state.user,
+      (value) => {
+        if (store.state.user) {
+          data.isLoginUser = true;
+          data.userAvatar = store.state.user.avatar
+            ? store.state.user.avatar
+            : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png';
+        } else {
+          data.isLoginUser = false;
+        }
+      },
+      { deep: true }
+    );
+
     onMounted(async () => {
       data.listCategory = (await getListCategory()).data;
       let sumOrderCart = 0;
@@ -243,9 +291,14 @@ export default defineComponent({
       sessionStorage.setItem('cart', JSON.stringify(cart));
     });
 
+    const handleLogout = () => {
+      store.commit('logOut');
+      router.push('/');
+    };
     return {
       data,
       numberOrderCart,
+      handleLogout,
     };
   },
 });

@@ -32,7 +32,7 @@
         :max="maxQuantity"
       />
       <el-button
-        type="primary"
+        type="danger"
         class="btn-order"
         @click="handleOrder"
         >Đặt hàng</el-button
@@ -82,8 +82,21 @@
       color: #535c68;
     }
 
-    .size-btn {
+    :deep(.size-btn) {
       margin-right: 10px;
+
+      &.is-active{
+        .el-radio-button__inner{
+          background-color: #ff3f34 !important;
+          border: none;
+        }
+      }
+
+      &.is-focus{
+        .el-radio-button__inner{
+          color: #fff !important;
+        }
+      }
     }
   }
 

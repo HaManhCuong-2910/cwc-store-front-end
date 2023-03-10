@@ -83,6 +83,7 @@ import { OrderCart } from '@/api/cart';
 import NProgress from 'nprogress'; // progress bar
 import { useRouter } from 'vue-router';
 import { ETimeline } from '@/store/cart/state';
+import { validatePhoneNumber } from '@/constant/constant';
 interface IFormData {
   name: string;
   email: string;
@@ -135,8 +136,7 @@ export default defineComponent({
       ],
       phoneNumber: [
         {
-          required: true,
-          message: 'Vui lòng nhập số điện thoại',
+          validator: validatePhoneNumber,
           trigger: 'blur',
         },
       ],
@@ -156,9 +156,7 @@ export default defineComponent({
       ],
       address: [
         {
-          required: true,
-          message: 'Vui lòng nhập địa chỉ',
-          trigger: 'blur',
+          required: false,
         },
       ],
     });
@@ -180,8 +178,8 @@ export default defineComponent({
               name: form.name,
               email: form.email,
               phoneNumber: form.phoneNumber,
-              province: `${form.province_id}`,
-              district: `${form.district_id}`,
+              province: form.province_id,
+              district: form.district_id,
               address: form.address,
               data: filterCart,
             };
