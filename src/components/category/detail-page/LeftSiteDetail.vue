@@ -68,7 +68,7 @@
     border-radius: 10px;
     border: 1px solid #7f8c8d;
     img {
-      height: 428px;
+      height: 390px;
       width: 100%;
       cursor: pointer;
       transform-origin: center center;

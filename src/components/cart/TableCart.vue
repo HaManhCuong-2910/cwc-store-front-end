@@ -104,6 +104,7 @@ import FormOrderCart from '@/components/cart/FormOrderCart.vue';
 import SuccessOrder from '@/components/cart/SuccessOrder.vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
+import { TProduct } from '@/api/products/data';
 enum EDelivery {
   FREE_SHIP = 'FREE_SHIP',
 }
@@ -111,6 +112,7 @@ enum EDelivery {
 export type TResultOrder = {
   message: string;
   status: number;
+  order_bill: TProduct[];
 };
 
 interface TData {

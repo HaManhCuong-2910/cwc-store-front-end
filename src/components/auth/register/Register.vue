@@ -14,6 +14,7 @@
         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
           <el-form
             label-position="top"
+            :rules="rules"
             ref="formRegisterRef"
             :model="formRegister"
             size="large"
@@ -107,8 +108,14 @@
               </div>
             </div>
 
-            <el-form-item>
-              <el-button type="primary">Đăng ký</el-button>
+            <el-form-item class="w-100">
+              <el-button
+                :loading="isLoading"
+                class="m-auto"
+                type="danger"
+                @click="onSubmit"
+                >Đăng ký</el-button
+              >
             </el-form-item>
           </el-form>
         </div>
@@ -154,16 +161,11 @@ import ProvinceInput from '@/components/cart/location/ProvinceInput.vue';
 import DistrictInput from '@/components/cart/location/DistrictInput.vue';
 import { FormRules, UploadProps } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
-interface IFormRegister {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
-  avatar: string;
-  province_id: string | number;
-  district_id: string | number;
-  address: string;
-}
+import { validatePhoneNumber } from '@/constant/constant';
+import { IFormRegister } from '@/api/auth/data';
+import { RegisterApi } from '@/api/auth';
+import Swal from 'sweetalert2';
+import router from '@/router';
 
 export default defineComponent({
   components: {
@@ -183,7 +185,11 @@ export default defineComponent({
       address: '',
     });
 
+    const formRegisterRef = ref<any>(null);
+
     const imageUrl = ref<any>('');
+
+    const isLoading = ref<boolean>(false);
 
     const rules = reactive<FormRules>({
       name: [
@@ -200,10 +206,16 @@ export default defineComponent({
           trigger: 'blur',
         },
       ],
-      phoneNumber: [
+      password: [
         {
           required: true,
-          message: 'Vui lòng nhập số điện thoại',
+          message: 'Vui lòng nhập password',
+          trigger: 'blur',
+        },
+      ],
+      phoneNumber: [
+        {
+          validator: validatePhoneNumber,
           trigger: 'blur',
         },
       ],
@@ -223,7 +235,7 @@ export default defineComponent({
       ],
       address: [
         {
-          required: true,
+          required: false,
           message: 'Vui lòng nhập địa chỉ',
           trigger: 'blur',
         },
@@ -234,7 +246,6 @@ export default defineComponent({
       uploadFile,
       uploadFiles
     ) => {
-      console.log('uploadFile', uploadFile);
       imageUrl.value = URL.createObjectURL(uploadFile.raw!);
     };
 
@@ -247,11 +258,48 @@ export default defineComponent({
       formRegister.district_id = value;
     };
 
+    const onSubmit = async () => {
+      await formRegisterRef.value.validate(
+        async (valid: any, fields: any) => {
+          if (valid) {
+            isLoading.value = true;
+            const [res, err] = await RegisterApi(
+              formRegister
+            );
+            if (res && res.data.success === 200) {
+              isLoading.value = false;
+              Swal.fire({
+                icon: 'success',
+                title: 'Đăng ký tài khoản thành công',
+                timer: 2000,
+                showConfirmButton: false,
+              });
+              router.push({
+                name: 'Login',
+              });
+            }
+
+            if (err) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Có lỗi xảy ra!',
+                text: err.message,
+              });
+            }
+          }
+        }
+      );
+    };
+
     return {
       formRegister,
+      formRegisterRef,
+      rules,
+      onSubmit,
       setProvince,
       setDistrict,
       imageUrl,
+      isLoading,
       handleChangeAvatar,
     };
   },

@@ -120,7 +120,9 @@ import {
   ref,
   watch,
 } from 'vue';
-interface ProductsItem {
+import { useRoute } from 'vue-router';
+import { string } from 'yup';
+export interface ProductsItem {
   value: string;
   link: string;
 }
@@ -141,6 +143,7 @@ export default defineComponent({
     const defaultPrices = ref([0, 0]);
     const defaultSize = ref([0, 0]);
     const maxPricesCustom = ref(100);
+    const route = useRoute();
 
     const products = ref<ProductsItem[]>([]);
     const data = reactive<TData>({
@@ -189,6 +192,19 @@ export default defineComponent({
       data.name = item.value;
     };
 
+    const handleSearchByQuery = (query: any) => {
+      defaultName.value = query.name;
+      data.name = query.name;
+      handleSearch();
+    };
+
+    watch(
+      () => route.query,
+      () => {
+        handleSearchByQuery(route.query);
+      }
+    );
+
     const handlePrices = (value: number[]) => {
       const [from_price, to_price] = value;
       data.from_price = from_price;
@@ -205,7 +221,7 @@ export default defineComponent({
       emit('actionLoading', true);
       const searchResult = (
         await getProducts({
-          limit: 1,
+          limit: 16,
           ...data,
         })
       ).data;
@@ -215,7 +231,11 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      products.value = await loadAll();
+      if (route.query) {
+        // handleSearchByQuery(route.query);
+      } else {
+        products.value = await loadAll();
+      }
     });
 
     return {

@@ -39,7 +39,8 @@ export const categoryRoute = [
     component: () => import('@/views/category/Intro.vue'),
   },
   {
-    path: '/phu-kien',
+    path: '/:slug',
+    name: 'TypeShoesBasketBall',
     meta: {
       layout: 'DefaultLayout',
       title: 'cwc-store',

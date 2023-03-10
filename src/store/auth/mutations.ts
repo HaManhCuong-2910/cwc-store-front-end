@@ -8,6 +8,8 @@ type TAuthMutations = {
       user: User | null;
     }
   ) => void;
+
+  logOut: (state: any) => void;
 };
 
 const setAccessToken = (
@@ -21,6 +23,12 @@ const setAccessToken = (
   state.access_token = data.access_token;
 };
 
+const logOut = (state: any) => {
+  state.user = null;
+  state.access_token = null;
+};
+
 export const handleAuthMutations: TAuthMutations = {
   setAccessToken,
+  logOut,
 };

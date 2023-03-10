@@ -55,3 +55,20 @@ export interface TDataLocation {
   link: string;
   value: string;
 }
+
+export const validatePhoneNumber = (
+  rule: any,
+  value: any,
+  callback: any
+) => {
+  const regex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
+  if (value === '') {
+    callback(new Error('Vui lòng nhập số điện thoại'));
+  }
+  if (!regex.test(value)) {
+    callback(
+      new Error('Số điện thoại không đúng định dạng')
+    );
+  }
+  callback();
+};

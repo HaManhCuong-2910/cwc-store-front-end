@@ -61,17 +61,18 @@
                 :to="{
                   name: 'Register',
                 }"
+                class="text-dark text-decoration-underline"
               >
                 Đăng ký tài khoản
               </router-link>
-              <a href="#!">Forgot password?</a>
+              <a href="#!" class="text-dark text-decoration-underline">Quên mật khẩu?</a>
             </div>
 
             <!-- Submit button -->
             <div class="text-center">
               <button
                 type="submit"
-                class="btn btn-primary btn-lg btn-block"
+                class="btn btn-danger btn-lg btn-block"
               >
                 Đăng nhập
               </button>
