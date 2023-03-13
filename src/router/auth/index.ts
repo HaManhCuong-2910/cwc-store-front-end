@@ -10,6 +10,18 @@ export const authRoute = [
       import('@/views/auth/login/LoginPage.vue'),
   },
   {
+    path: '/auth/forgot-password',
+    name: 'ForgotPassword',
+    meta: {
+      layout: 'DefaultLayout',
+      title: 'Quên mật khẩu',
+    },
+    component: () =>
+      import(
+        '@/views/auth/forgot-password/ForgotPassword.vue'
+      ),
+  },
+  {
     path: '/auth/register',
     name: 'Register',
     meta: {
@@ -18,5 +30,17 @@ export const authRoute = [
     },
     component: () =>
       import('@/views/auth/register/RegisterPage.vue'),
+  },
+  {
+    path: '/auth/forgot-password',
+    name: 'ForgotPassword',
+    meta: {
+      layout: 'DefaultLayout',
+      title: 'Quên mật khẩu',
+    },
+    component: () =>
+      import(
+        '@/views/auth/forgot-password/ForgotPassword.vue'
+      ),
   },
 ];

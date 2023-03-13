@@ -82,8 +82,13 @@
             />
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item
-                  >Thông tin tài khoản</el-dropdown-item
+                <router-link
+                  :to="{
+                    name: 'userInfo',
+                  }"
+                  ><el-dropdown-item
+                    >Thông tin tài khoản</el-dropdown-item
+                  ></router-link
                 >
                 <el-dropdown-item @click="handleLogout"
                   >Đăng xuất</el-dropdown-item
@@ -225,6 +230,7 @@ import { useStore } from 'vuex';
 import { Quantity, TProduct } from '@/api/products/data';
 import router from '@/router';
 import { fa } from 'element-plus/es/locale';
+import { AvatarUserDefault } from '@/constant/constant';
 type THeaderData = {
   listCategory: any[] | AxiosResponse<any[], any>;
   isLoginUser: boolean;
@@ -247,7 +253,7 @@ export default defineComponent({
       isLoginUser: user?._id ? true : false,
       userAvatar: user?.avatar
         ? user.avatar
-        : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+        : AvatarUserDefault,
     });
 
     watch(
@@ -273,7 +279,7 @@ export default defineComponent({
           data.isLoginUser = true;
           data.userAvatar = store.state.user.avatar
             ? store.state.user.avatar
-            : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png';
+            : AvatarUserDefault;
         } else {
           data.isLoginUser = false;
         }
@@ -299,6 +305,7 @@ export default defineComponent({
       data,
       numberOrderCart,
       handleLogout,
+      AvatarUserDefault,
     };
   },
 });

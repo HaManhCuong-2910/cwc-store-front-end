@@ -40,3 +40,46 @@ export const refreshToken = async () => {
     return [null, err];
   }
 };
+
+export const ForgotPassword = async (email: string) => {
+  try {
+    const res = await instance.post<any>(
+      '/auth/forgot-password',
+      { email }
+    );
+    return [res, null];
+  } catch (err: any) {
+    return [null, err];
+  }
+};
+
+export const ResetForgotPassword = async (data: {
+  email: string;
+  code: string;
+}) => {
+  try {
+    const res = await instance.post<any>(
+      '/auth/reset-forgot-password',
+      data
+    );
+    return [res, null];
+  } catch (err: any) {
+    return [null, err];
+  }
+};
+
+export const ResetPassword = async (data: {
+  email: string;
+  token_reset: string;
+  password: string;
+}) => {
+  try {
+    const res = await instance.post<any>(
+      '/auth/reset-password',
+      data
+    );
+    return [res, null];
+  } catch (err: any) {
+    return [null, err];
+  }
+};
