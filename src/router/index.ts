@@ -21,6 +21,15 @@ const routes: Array<RouteRecordRaw> = [
     meta: { layout: 'DefaultLayout', title: 'Trang chủ' },
   },
   {
+    path: '/user/info',
+    name: 'userInfo',
+    component: () => import('@/views/user/UserInfo.vue'),
+    meta: {
+      layout: 'DefaultLayout',
+      title: 'Thông tin cá nhân',
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     meta: {

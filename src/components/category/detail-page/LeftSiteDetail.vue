@@ -8,24 +8,10 @@
       class="product-img"
     >
       <swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-1.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-2.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-3.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-4.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-5.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-6.jpg"
-      /></swiper-slide>
+        v-for="imageUrl in props.images"
+        :key="imageUrl"
+        ><img :src="imageUrl" />
+      </swiper-slide>
     </swiper>
     <swiper
       @swiper="setControlledSwiperClicked"
@@ -38,24 +24,10 @@
       class="product-slide-img"
     >
       <swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-1.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-2.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-3.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-4.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-5.jpg" /></swiper-slide
-      ><swiper-slide
-        ><img
-          src="https://swiperjs.com/demos/images/nature-6.jpg" /></swiper-slide
-      ><swiper-slide />
+        v-for="imageUrl in props.images"
+        :key="imageUrl"
+        ><img :src="imageUrl" />
+      </swiper-slide>
     </swiper>
   </div>
 </template>
@@ -88,7 +60,7 @@
       border-radius: 10px;
       border: 1px solid #7f8c8d;
       width: 100%;
-      height: 100%;
+      height: 90px;
     }
   }
 }

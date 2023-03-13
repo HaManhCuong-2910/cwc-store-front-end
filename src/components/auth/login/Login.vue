@@ -65,12 +65,19 @@
               >
                 Đăng ký tài khoản
               </router-link>
-              <a href="#!" class="text-dark text-decoration-underline">Quên mật khẩu?</a>
+              <router-link
+                :to="{
+                  name: 'ForgotPassword',
+                }"
+                class="text-dark text-decoration-underline"
+                >Quên mật khẩu?</router-link
+              >
             </div>
 
             <!-- Submit button -->
             <div class="text-center">
               <button
+                :disabled="isLoading"
                 type="submit"
                 class="btn btn-danger btn-lg btn-block"
               >
@@ -90,7 +97,7 @@
 import { Login } from '@/api/auth';
 import { IDataFormLogin } from '@/api/auth/data';
 import Swal from 'sweetalert2';
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import * as yup from 'yup';
@@ -114,6 +121,8 @@ export default defineComponent({
       password: '',
     });
 
+    const isLoading = ref<boolean>(false);
+
     const loginFormSchema = yup.object().shape({
       email: yup.string().required().email(),
       password: yup.string().required(),
@@ -135,7 +144,9 @@ export default defineComponent({
       loginFormSchema
         .validate(dataForm, { abortEarly: false })
         .then(async () => {
+          isLoading.value = true;
           const [result, err] = await Login(dataForm);
+          isLoading.value = false;
 
           if (result) {
             const { access_token, user } = result.data;
@@ -169,6 +180,7 @@ export default defineComponent({
     return {
       dataForm,
       errors,
+      isLoading,
       validate,
       onSubmitForm,
     };

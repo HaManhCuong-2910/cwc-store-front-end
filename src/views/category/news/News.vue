@@ -130,12 +130,15 @@ import { TDataCardNews } from '@/constant/constant';
 import ScrollReveal from 'scrollreveal';
 import { getListNews } from '@/api/news/index';
 import { DataGetListNewsResponse } from '@/api/news/data';
+import { useRoute } from 'vue-router';
+import router from '@/router';
 
 export default {
   components: {
     CardNews,
   },
   setup() {
+    const route = useRoute();
     const dataCardNews = ref<TDataCardNews[]>([]);
     const cardNewsItem = ref<any>();
     const dataNewsList = reactive({
@@ -171,8 +174,19 @@ export default {
     };
 
     onMounted(async () => {
-      await handleSearch({ limit: 5 });
+      if (Object.keys(route.query).length === 0) {
+        await handleSearch({ limit: 5 });
+      } else {
+        await handleSearch(route.query);
+      }
     });
+
+    watch(
+      () => route.query,
+      async () => {
+        await handleSearch(route.query);
+      }
+    );
 
     watch(
       () => cardNewsItem.value,
@@ -193,8 +207,14 @@ export default {
       }
     );
 
-    const handleCurrentChange = async (page: number) => {
-      await handleSearch({ page, limit: 5 });
+    const handleCurrentChange = (page: number) => {
+      router.push({
+        path: 'tin-tuc',
+        query: {
+          page,
+          limit: 5,
+        },
+      });
     };
     return {
       dataCardNews,

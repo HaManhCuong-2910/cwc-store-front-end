@@ -14,6 +14,15 @@ export interface IFormRegister {
   address: string;
 }
 
+export interface IFormUserInfo {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  province_id: string | number;
+  district_id: string | number;
+  address: string;
+}
+
 export type TRegisterAccountResponse = {
   success: number;
   data: IFormRegister;
