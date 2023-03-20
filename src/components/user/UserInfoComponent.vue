@@ -78,10 +78,11 @@ export default defineComponent({
         newAvatar as File
       );
       if (res) {
-        const { secure_url } = res;
+        const { secure_url, public_id } = res;
         await updateUserInfo({
           ...data,
           ...{ avatar: secure_url },
+          ...{ public_id_avatar: public_id },
         });
       }
       if (err) {

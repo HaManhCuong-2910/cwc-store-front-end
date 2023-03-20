@@ -57,30 +57,6 @@
                 </el-form-item>
               </div>
               <div class="col-12">
-                <el-form-item
-                  label="Ảnh đại diện"
-                  prop="avatar"
-                >
-                  <el-upload
-                    class="avatar-uploader"
-                    :show-file-list="false"
-                    :auto-upload="false"
-                    action="#"
-                    list-type="picture"
-                    :on-change="handleChangeAvatar"
-                  >
-                    <img
-                      v-if="imageUrl"
-                      :src="imageUrl"
-                      class="avatar"
-                    />
-                    <el-icon
-                      v-else
-                      class="avatar-uploader-icon"
-                      ><Plus
-                    /></el-icon>
-                  </el-upload>
-                </el-form-item>
                 <div class="col-12">
                   <ProvinceInput
                     :province_id="formRegister.province_id"
@@ -124,37 +100,6 @@
   </section>
 </template>
 
-<style scoped>
-.avatar-uploader .avatar {
-  width: 160px;
-  height: 140px;
-  display: block;
-}
-</style>
-
-<style>
-.avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
-}
-
-.avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
-
-.el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 160px;
-  height: 140px;
-  text-align: center;
-}
-</style>
-
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue';
 import ProvinceInput from '@/components/cart/location/ProvinceInput.vue';
@@ -179,7 +124,6 @@ export default defineComponent({
       email: '',
       phoneNumber: '',
       password: '',
-      avatar: '',
       province_id: '',
       district_id: '',
       address: '',
