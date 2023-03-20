@@ -8,7 +8,7 @@ export interface IFormRegister {
   email: string;
   phoneNumber: string;
   password: string;
-  avatar: string;
+  avatar?: string;
   province_id: string | number;
   district_id: string | number;
   address: string;

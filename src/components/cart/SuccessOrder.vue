@@ -4,7 +4,7 @@
       Bạn đã đặt hàng thành công
     </h1>
     <el-table
-      :data="resultOrderTest"
+      :data="dataResult.order_bill"
       stripe
       align="center"
       header-align="center"
@@ -34,7 +34,7 @@
         width="180"
       >
         <template #default="scope">
-          <b>{{ formatNumberMony(scope.row.price) }} đ</b>
+          <b>{{ formatNumberMony(scope.row.price) }} VNĐ</b>
         </template>
       </el-table-column>
     </el-table>
@@ -70,28 +70,9 @@ export default defineComponent({
   props: ['resultOrder'],
   setup(props) {
     const dataResult = ref<TResultOrder>(props.resultOrder);
-    const resultOrderTest = ref([
-      {
-        id: '63e112fd202ddb2838f55a0f',
-        name: 'Giày quá đẹp 1',
-        size: 41,
-        size_id: '63e112fd202ddb2838f55a12',
-        quantity: 3,
-        price: 600000,
-      },
-      {
-        id: '63e112fd202ddb2838f55a0f',
-        name: 'Giày quá đẹp 1',
-        size: 41,
-        size_id: '63e112fd202ddb2838f55a12',
-        quantity: 3,
-        price: 600000,
-      },
-    ]);
 
     return {
       dataResult,
-      resultOrderTest,
       formatNumberMony,
     };
   },
