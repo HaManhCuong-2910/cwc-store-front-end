@@ -28,6 +28,11 @@
   }
 }
 </style>
+<style>
+.ql-align-center {
+  text-align: center;
+}
+</style>
 
 <script lang="ts">
 import { getDetailNews } from '@/api/news';
