@@ -68,6 +68,7 @@ import {
   onMounted,
   reactive,
   ref,
+  watch,
 } from 'vue';
 import ProvinceInput from '@/components/cart/location/ProvinceInput.vue';
 import DistrictInput from '@/components/cart/location/DistrictInput.vue';
@@ -84,7 +85,7 @@ import NProgress from 'nprogress'; // progress bar
 import { useRouter } from 'vue-router';
 import { ETimeline } from '@/store/cart/state';
 import { validatePhoneNumber } from '@/constant/constant';
-interface IFormData {
+export interface IFormData {
   name: string;
   email: string;
   phoneNumber: string;
@@ -98,7 +99,11 @@ export default defineComponent({
     ProvinceInput,
     DistrictInput,
   },
-  emits: ['pushResultOrder'],
+  emits: [
+    'pushResultOrder',
+    'formOrderChange',
+    'isDisablePaypal',
+  ],
   setup(props, { emit }) {
     const store = useStore();
     const router = useRouter();
@@ -161,7 +166,7 @@ export default defineComponent({
       ],
     });
 
-    const onSubmit = async () => {
+    const onSubmit = async (objStatusPayment) => {
       await formRef.value.validate(
         async (valid: any, fields: any) => {
           if (valid) {
@@ -181,6 +186,7 @@ export default defineComponent({
               province: form.province_id,
               district: form.district_id,
               address: form.address,
+              ...objStatusPayment,
               data: filterCart,
             };
             NProgress.start();
@@ -231,6 +237,35 @@ export default defineComponent({
     const setDistrict = (value: string) => {
       form.district_id = value;
     };
+
+    watch(
+      () => ({ ...form }),
+      async () => {
+        emit('formOrderChange', form);
+        await formRef.value.validate((valid, fields) => {
+          emit(
+            'isDisablePaypal',
+            fields && Object.keys(fields).length > 0
+              ? true
+              : false
+          );
+        });
+        formRef.value.clearValidate();
+      }
+    );
+
+    onMounted(async () => {
+      emit('formOrderChange', form);
+      await formRef.value.validate((valid, fields) => {
+        emit(
+          'isDisablePaypal',
+          fields && Object.keys(fields).length > 0
+            ? true
+            : false
+        );
+      });
+      formRef.value.clearValidate();
+    });
 
     return {
       form,

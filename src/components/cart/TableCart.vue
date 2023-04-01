@@ -17,6 +17,8 @@
           "
           ref="buyerForm"
           @pushResultOrder="pushResultOrder"
+          @formOrderChange="formOrderChange"
+          @isDisablePaypal="isDisablePaypal"
         />
       </div>
       <div class="col-4">
@@ -52,22 +54,34 @@
               data.timeline === ETimeline.InformationLine ||
               !data.timeline
             "
-            class="btn-order"
+            class="btn-order w-100 mb-3"
             @click="HandleOrderClick"
             type="danger"
             :disabled="data.isEmptyCart"
-            >Tiến hành thanh toán</el-button
+            >Tiến hành đặt hàng</el-button
           >
+
           <el-button
             v-if="
               data.timeline === ETimeline.BuyerInformation
             "
-            class="btn-order"
+            class="btn-order w-100 mb-3"
             @click="handleBuyerClick"
             type="danger"
             :disabled="data.isEmptyCart"
             >Đặt hàng</el-button
           >
+          <PaypalButtonsComponent
+            v-if="
+              data.timeline ===
+                ETimeline.BuyerInformation &&
+              !data.isEmptyCart
+            "
+            :formOrderPaypal="data.formOrder"
+            :changeDisable="data.changeDisablePaypal"
+            :sumPrice="data.sumPrice"
+            @orderPaypal="orderPaypal"
+          />
         </div>
       </div>
     </div>
@@ -89,7 +103,10 @@
 </style>
 
 <script lang="ts">
-import { TProductCart } from '@/constant/constant';
+import {
+  EStatusPaymentOrder,
+  TProductCart,
+} from '@/constant/constant';
 import { ETimeline } from '@/store/cart/state';
 import { formatNumberMony } from '@/constant/constant';
 import {
@@ -100,11 +117,14 @@ import {
   watch,
 } from 'vue';
 import ListProductsCart from '@/components/cart/ListProductsCart.vue';
-import FormOrderCart from '@/components/cart/FormOrderCart.vue';
+import FormOrderCart, {
+  IFormData,
+} from '@/components/cart/FormOrderCart.vue';
 import SuccessOrder from '@/components/cart/SuccessOrder.vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { TProduct } from '@/api/products/data';
+import PaypalButtonsComponent from './PaypalButtonsComponent.vue';
 enum EDelivery {
   FREE_SHIP = 'FREE_SHIP',
 }
@@ -121,6 +141,8 @@ interface TData {
   timeline: ETimeline | '';
   isEmptyCart: boolean;
   resultOrder: TResultOrder | null;
+  formOrder: IFormData | null;
+  changeDisablePaypal: boolean;
 }
 
 export default defineComponent({
@@ -129,6 +151,7 @@ export default defineComponent({
     ListProductsCart,
     FormOrderCart,
     SuccessOrder,
+    PaypalButtonsComponent,
   },
   setup() {
     const data = reactive<TData>({
@@ -137,6 +160,8 @@ export default defineComponent({
       timeline: ETimeline.InformationLine,
       isEmptyCart: true,
       resultOrder: null,
+      formOrder: null,
+      changeDisablePaypal: true,
     });
     const buyerForm = ref<any>(null);
     const store = useStore();
@@ -187,11 +212,29 @@ export default defineComponent({
     };
 
     const handleBuyerClick = () => {
-      buyerForm.value.onSubmit();
+      buyerForm.value.onSubmit({
+        status_payment: EStatusPaymentOrder.NO_PAY,
+      });
     };
 
     const pushResultOrder = (resultOrder: TResultOrder) => {
       data.resultOrder = resultOrder;
+    };
+
+    const orderPaypal = (order: any) => {
+      if (order.status === 'COMPLETED') {
+        buyerForm.value.onSubmit({
+          status_payment: EStatusPaymentOrder.PAYED,
+        });
+      }
+    };
+
+    const formOrderChange = (order: IFormData) => {
+      data.formOrder = order;
+    };
+
+    const isDisablePaypal = (isDisable: boolean) => {
+      data.changeDisablePaypal = isDisable;
     };
 
     return {
@@ -203,6 +246,9 @@ export default defineComponent({
       EDelivery,
       ETimeline,
       formatNumberMony,
+      orderPaypal,
+      formOrderChange,
+      isDisablePaypal,
     };
   },
 });

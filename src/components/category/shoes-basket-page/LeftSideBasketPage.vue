@@ -15,7 +15,7 @@
             :fetch-suggestions="querySearch"
             clearable
             :debounce="400"
-            class="inline-input w-50 mr-2"
+            class="inline-input w-75 mr-1"
             :class="'input-custom'"
             placeholder="nhập tên sản phẩm"
             @select="handleSelectName"
