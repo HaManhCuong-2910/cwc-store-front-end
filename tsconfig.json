@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "strictPropertyInitialization": false,
+    "allowJs": true,
+    "checkJs": false,
+    "noImplicitAny": false,
     "target": "esnext",
     "module": "esnext",
     "strict": true,

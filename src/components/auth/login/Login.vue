@@ -21,7 +21,7 @@
                 type="email"
                 id="email"
                 v-model="dataForm.email"
-                @blur="validate('email')"
+                @blur="validate('email' as EFieldDataForm)"
                 class="form-control form-control-lg"
                 :class="errors.email && 'is-invalid'"
               />
@@ -42,7 +42,9 @@
                 type="password"
                 id="password"
                 v-model="dataForm.password"
-                @blur="validate('password')"
+                @blur="
+                  validate('password' as EFieldDataForm)
+                "
                 class="form-control form-control-lg"
                 :class="errors.password && 'is-invalid'"
               />
@@ -108,6 +110,7 @@ enum EFieldDataForm {
 }
 
 export default defineComponent({
+  components: {},
   setup() {
     const router = useRouter();
     const store = useStore();
