@@ -4,16 +4,6 @@
       <div class="row">
         <div class="col-md-3">
           <ul>
-            <li class="title">HỖ TRỢ KHÁCH HÀNG</li>
-            <li>Chính sách vận chuyển và kiểm hàng</li>
-            <li>Chính sách thanh toán và khiếu nại</li>
-            <li>Chính sách bảo mật thông tin</li>
-            <li>Chính sách bảo hành sản phẩm</li>
-            <li>Chính sách đổi hàng sản phẩm</li>
-          </ul>
-        </div>
-        <div class="col-md-3">
-          <ul>
             <li class="title">CWCSTORE.VN</li>
             <li>
               Vô địch ngay lần đầu tiên ra quân, đội tuyển
@@ -39,6 +29,17 @@
             </li>
             <li>Địa chỉ : Số 208, Đường Láng , Hà Nội</li>
           </ul>
+        </div>
+        <div class="col-md-3">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5119050537214!2d105.7996472749285!3d21.012193880632946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab5f7dcd8547%3A0xc8e8c866af8955dd!2zNDMgxJAuIFRy4bqnbiBEdXkgSMawbmcsIFRydW5nIEhvw6AsIEPhuqd1IEdp4bqleSwgSMOgIE7hu5lpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1681914239384!5m2!1svi!2s"
+            width="100%"
+            height="265"
+            style="border: 0"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
       <div class="copy-right mt-5">
