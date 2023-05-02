@@ -23,6 +23,15 @@
         Số lượng còn lại: <span>{{ maxQuantity }}</span>
       </p>
     </div>
+    <div
+      class="text-style"
+      @click="isShowDialogInstruct = true"
+    >
+      <font-awesome-icon
+        :icon="['fas', 'ruler-horizontal']"
+      />
+      <span> Hướng dẫn chọn cỡ giày </span>
+    </div>
     <div class="order">
       <p>Số lượng</p>
       <el-input-number
@@ -60,10 +69,37 @@
       </p>
     </div>
   </div>
+  <el-dialog
+    v-model="isShowDialogInstruct"
+    title=""
+    align-center
+  >
+    <div class="padding-all-12">
+      <img
+        src="https://peaksport.vn/wp-content/uploads/2021/03/chon-size-3-1024x622.jpg"
+      />
+      <img
+        src="https://peaksport.vn/wp-content/uploads/2021/03/chon-size-2-1024x630.jpg"
+      />
+    </div>
+  </el-dialog>
 </template>
 
 <style lang="scss" scoped>
+.padding-all-12 {
+  padding: 12px;
+}
+img {
+  width: 100%;
+  object-fit: contain;
+}
 .right-site {
+  .text-style {
+    font-size: 16px;
+    font-weight: 400;
+    color: #f56c6c;
+    cursor: pointer;
+  }
   h1 {
     font-size: 40px;
   }
@@ -85,15 +121,15 @@
     :deep(.size-btn) {
       margin-right: 10px;
 
-      &.is-active{
-        .el-radio-button__inner{
+      &.is-active {
+        .el-radio-button__inner {
           background-color: #ff3f34 !important;
           border: none;
         }
       }
 
-      &.is-focus{
-        .el-radio-button__inner{
+      &.is-focus {
+        .el-radio-button__inner {
           color: #fff !important;
         }
       }
@@ -171,6 +207,7 @@ export default defineComponent({
     const activeSize = ref<number>(
       props.product.quantities[0].size
     );
+    const isShowDialogInstruct = ref<boolean>(false);
 
     const onSnipped = (newState: {
       hasEllipsis: boolean;
@@ -231,6 +268,7 @@ export default defineComponent({
       activeSize,
       props,
       isSniped,
+      isShowDialogInstruct,
       newPrice,
       onSnipped,
       handleOrder,
