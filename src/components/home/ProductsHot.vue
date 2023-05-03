@@ -155,7 +155,10 @@ export default defineComponent({
     const product = ref<any>();
 
     onMounted(async () => {
-      const result = await getProducts();
+      const result = await getProducts({
+        page: 1,
+        limit: 100,
+      });
       data.listProductNormal = result.data.data.filter(
         (item: TProduct) => !item.is_hot
       );
