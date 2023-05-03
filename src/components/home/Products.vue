@@ -19,8 +19,11 @@
                 slug: item.slug,
               },
             }"
+            class="h-100 d-block"
           >
-            <div class="products-contain-card">
+            <div
+              class="products-contain-card h-100 d-flex justify-content-between flex-column"
+            >
               <div class="products-contain-card-img">
                 <img
                   :src="item.images[0]"
@@ -85,6 +88,10 @@
 
     h4 {
       font-size: 19px;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       &:hover {
         color: #ff3f34;
