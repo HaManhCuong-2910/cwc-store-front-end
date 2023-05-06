@@ -19,6 +19,7 @@
             :class="'input-custom'"
             placeholder="nhập tên sản phẩm"
             @select="handleSelectName"
+            @change="handleSelectName"
           />
           <el-button
             type="danger"
@@ -121,7 +122,7 @@ import {
   watch,
 } from 'vue';
 import { useRoute } from 'vue-router';
-import { string } from 'yup';
+import { object, string } from 'yup';
 export interface ProductsItem {
   value: string;
   link: string;
@@ -188,8 +189,11 @@ export default defineComponent({
       });
     };
 
-    const handleSelectName = (item: ProductsItem) => {
-      data.name = item.value;
+    const handleSelectName = (
+      item: ProductsItem | string
+    ) => {
+      data.name =
+        typeof item === 'object' ? item.value : item;
     };
 
     const handleSearchByQuery = (query: any) => {
@@ -231,11 +235,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      if (route.query) {
-        // handleSearchByQuery(route.query);
-      } else {
-        products.value = await loadAll();
-      }
+      products.value = await loadAll();
     });
 
     return {
