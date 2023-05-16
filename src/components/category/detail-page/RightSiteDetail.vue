@@ -166,6 +166,7 @@ img {
 
     .des_item_text {
       display: block;
+      text-align: justify;
     }
   }
 }
